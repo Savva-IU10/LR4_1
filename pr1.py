@@ -1,6 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+def add_circle(ax, center, radius, color, edgecolor='black'):
+    """Добавляет круг на ось."""
+    circle = plt.Circle(center, radius, color=color, ec=edgecolor)
+    ax.add_artist(circle)
+
+def add_polygon(ax, vertices, color, edgecolor='black'):
+    """Добавляет многоугольник на ось."""
+    polygon = plt.Polygon(vertices, color=color, ec=edgecolor)
+    ax.add_artist(polygon)
+
 def draw_bunny():
     fig, ax = plt.subplots(figsize=(5, 7))
     ax.set_xlim(0, 400)
@@ -8,46 +18,35 @@ def draw_bunny():
     ax.set_facecolor('white')
 
     # Тело
-    body = plt.Circle((200, 200), 80, color='lightgray', ec='black')
-    ax.add_artist(body)
+    add_circle(ax, (200, 200), 80, 'lightgray')
 
     # Голова
-    head = plt.Circle((300, 200), 40, color='lightgray', ec='black')
-    ax.add_artist(head)
+    add_circle(ax, (300, 200), 40, 'lightgray')
 
     # Глаза
-    eye_left = plt.Circle((290, 220), 5, color='black')  # Левый глаз
-    eye_right = plt.Circle((310, 220), 5, color='black') # Правый глаз
-    ax.add_artist(eye_left)
-    ax.add_artist(eye_right)
+    add_circle(ax, (290, 220), 5, 'black')  # Левый глаз
+    add_circle(ax, (310, 220), 5, 'black')  # Правый глаз
 
     # Нос
-    nose = plt.Circle((300, 210), 5, color='pink', ec='black')
-    ax.add_artist(nose)
+    add_circle(ax, (300, 210), 5, 'pink')
 
     # Рот
     plt.plot([295, 305], [195, 195], color='black', linewidth=2)  # Рот ниже
 
-    # Уши (уголки вверх)
+    # Уши
     ear_left = np.array([[290, 230], [250, 300], [290, 280]])
     ear_right = np.array([[310, 230], [350, 300], [310, 280]])
-    ax.add_artist(plt.Polygon(ear_left, color='lightgray', ec='black'))
-    ax.add_artist(plt.Polygon(ear_right, color='lightgray', ec='black'))
+    add_polygon(ax, ear_left, 'lightgray')
+    add_polygon(ax, ear_right, 'lightgray')
 
-    # Лапы (опущены ниже туловища)
-    front_leg_left = plt.Circle((160, 120), 20, color='lightgray', ec='black')  # Опущена ниже
-    front_leg_right = plt.Circle((240, 120), 20, color='lightgray', ec='black') # Опущена ниже
-    ax.add_artist(front_leg_left)
-    ax.add_artist(front_leg_right)
+    # Лапы
+    add_circle(ax, (160, 120), 20, 'lightgray')  # Передняя левая лапа
+    add_circle(ax, (240, 120), 20, 'lightgray')  # Передняя правая лапа
+    add_circle(ax, (130, 120), 25, 'lightgray')  # Задняя левая лапа
+    add_circle(ax, (270, 120), 25, 'lightgray')  # Задняя правая лапа
 
-    back_leg_left = plt.Circle((130, 120), 25, color='lightgray', ec='black')
-    back_leg_right = plt.Circle((270, 120), 25, color='lightgray', ec='black')
-    ax.add_artist(back_leg_left)
-    ax.add_artist(back_leg_right)
-
-    # Хвост (подвинут чуть правее)
-    tail = plt.Circle((120, 200), 15, color='white', ec='black')  # Измененные координаты
-    ax.add_artist(tail)
+    # Хвост
+    add_circle(ax, (120, 200), 15, 'white')  # Измененные координаты
 
     # Убираем оси
     ax.axis('off')
